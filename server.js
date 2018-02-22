@@ -26,8 +26,8 @@ app.use(session({
   saveUninitialized: false
 }))
 
-// app.engine('hanlebars',handleBars({defaultLayout:"main"}));
-// app.use("view engine",'handlebars')
+app.engine('handlebars',handleBars({defaultLayout:"main"}));
+app.set("view engine",'handlebars')
 
 app.use(express.static('public'));
 
