@@ -34,7 +34,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(register);
+app.use(routes);
 
 app.listen(PORT, function() {
   console.log('Listening on port: ' + PORT);
