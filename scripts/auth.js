@@ -1,10 +1,41 @@
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
 const models = require('../models/user')
+const mongoose = require('mongoose');
+const keys = require('../keys.json')
 
 
-var auth = function() {
-	return true;
+var auth = function (req, res, next) {
+	console.log(req.body);
+	let userSession = req.session;
+	mongoose.connect(keys.mongoUrl + "gesample", (mongooseErr, sucess) => {
+		if (mongooseErr) {
+			console.error(`Could not connect to mongoose error: ${mongooseErr}`)
+			
+			next(false)
+		}
+		else {
+			models.findOne({ 'username': req.body.username.toLowerCase().trim() }, function (err, user) {
+				if (err) {
+					next(false) //Login failed strange error or username
+				};
+				if (user !== null) {
+					if (bcrypt.compareSync(req.body.password, user.password)) {
+						userSession.user = user.username;
+						userSession.firstname = user.firstName
+						userSession.lastname = user.lastName
+						mongoose.disconnect();
+						next(true);
+					}
+					else {
+						next(false) //Login failed! Bad Password
+					};
+					
+				}
+			});
+		}
+	});
 }
+
+
 
 module.exports = auth;
