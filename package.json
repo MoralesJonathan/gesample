@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jonmorazav/gesample#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "connect-mongo": "^2.0.1",
     "express": "^4.16.2",
