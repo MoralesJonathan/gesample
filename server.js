@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const handleBars = require('express-handlebars');
 const app = express();
-const bcrypt = require("bcrypt");
 const morgan = require('morgan');
 const MongoStore = require('connect-mongo')(session);
 const sessions = require('express-sessions');
@@ -12,7 +11,6 @@ const routes = require('./routes');
 const keys = require('./keys.json')
 
 const environment = app.get('env');
-const saltRounds = 10;
 
 app.use(session({
   secret: keys.sessionKey,
