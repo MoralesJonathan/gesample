@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const handleBars = require('express-handlebars');
 const app = express();
 const bcrypt = require("bcrypt");
 const morgan = require('morgan');
@@ -25,6 +26,9 @@ app.use(session({
   }),
   saveUninitialized: false
 }))
+
+app.engine('hanlebars',handleBars({defaultLayout:"main"}));
+app.use("view engine",'handlebars')
 
 app.use(express.static('public'));
 
