@@ -3,8 +3,8 @@ const saltRounds = 10;
 const models = require('../models/user')
 
 
-module.exports= function(req,res){
-bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+var create = function(req, res) {
+	bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
       if (!err) {
 		 mongoose.conect(`mongodb://${keys.mongoUrl}`)
 		 let user = new models({
@@ -26,3 +26,4 @@ bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
     });
 }
 
+module.exports = create;
