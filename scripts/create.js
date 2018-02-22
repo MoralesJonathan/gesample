@@ -12,6 +12,7 @@ var create = function(req, res, next) {
 					console.error(`Could not connect to mongoose error: ${mongooseErr}`)
 					next(false)
 				} else {
+				
 				let user = new models({
  				 firstName: req.body.firstname.toLowerCase(),
  				 lastName: req.body.lastname.toLowerCase(),
