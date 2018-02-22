@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const models = require('../models/user')
 
+
+module.exports= function(req,res){
 bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
       if (!err) {
 		 mongoose.conect(`mongodb://${keys.mongoUrl}`)
@@ -22,5 +24,5 @@ bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
       }
       else console.error(`Could not hash password error: ${err}`)
     });
+}
 
-module.exports = create;

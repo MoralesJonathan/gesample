@@ -1,14 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const session= require('express-session');
 const bodyParser = require('body-parser');
 const handleBars = require('express-handlebars');
 const app = express();
 const morgan = require('morgan');
 const MongoStore = require('connect-mongo')(session);
-const sessions = require('express-sessions');
 const PORT = process.env.PORT || 8080;
 const routes = require('./routes');
 const keys = require('./keys.json')
+const register = require('./routes/api/register')
 
 const environment = app.get('env');
 
@@ -20,20 +21,20 @@ app.use(session({
     maxAge: 900000
   },
   store: new MongoStore({
-    url: `mongodb://${keys.mongoUrl}/session?authSource=${keys.mongoUser}`
+    url: `${keys.mongoUrl}gesample`
   }),
   saveUninitialized: false
 }))
 
-app.engine('hanlebars',handleBars({defaultLayout:"main"}));
-app.use("view engine",'handlebars')
+// app.engine('hanlebars',handleBars({defaultLayout:"main"}));
+// app.use("view engine",'handlebars')
 
 app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(routes);
+app.use(register);
 
 app.listen(PORT, function() {
   console.log('Listening on port: ' + PORT);
