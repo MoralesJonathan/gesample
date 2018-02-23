@@ -1,6 +1,6 @@
 (function() {
   populateUsersTable();
-
+  populateUserInfo();
 })();
 
 function populateUsersTable() {
@@ -16,19 +16,34 @@ function populateUsersTable() {
         tableContent += '<td>' + users[i].lastName + '</td>';
         tableContent += '<td>' + users[i].username + '</td>';
         tableContent += '</tr>';
-      }
+      };
       document.getElementById('usersListTable').tBodies[0].innerHTML = tableContent;
     }
   };
   xhttp.open("GET", "api/users/allUsers", true);
   xhttp.send();
-}
+};
+
+function populateUserInfo() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var user = JSON.parse(this.responseText);
+      document.getElementById('name').value = user.firstName + " " + user.lastName;
+      document.getElementById('username').value = user.username;
+      document.getElementById('age').textContent = user.age;
+      document.getElementById('language').textContent = user.language;
+    }
+  };
+  xhttp.open("GET", "api/users/user/self", true);
+  xhttp.send();
+};
 
 function logout() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      window.location = '/';
+      window.location = '/'
     }
   };
   xhttp.open("POST", "api/logout", true);
@@ -36,10 +51,10 @@ function logout() {
 }
 
 function updateInfo(element) {
-  var xhttp = new XMLHttpRequest();
-  var value = document.getElementById(element.id).value;
   if (element.id === "name") {
-    var name = value.split(" ");
+    var xhttp = new XMLHttpRequest();
+    var value = document.getElementById(element.id).value
+    var name = value.split(" ")
     xhttp.open("POST", "api/users/update/self", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify({
@@ -53,6 +68,8 @@ function updateInfo(element) {
       'newValue': name[1]
     }));
   } else {
+    var xhttp = new XMLHttpRequest();
+    var value = document.getElementById(element.id).value
     xhttp.open("POST", "api/users/update/self", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify({
