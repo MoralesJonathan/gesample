@@ -17,6 +17,8 @@ var create = function(req, res, next) {
  				 firstName: req.body.firstname.toLowerCase(),
  				 lastName: req.body.lastname.toLowerCase(),
  				 username: req.body.username.toLowerCase().trim(),
+				 age: null,
+				 language: '',
  				 password: hash
  			 })
  			 user.save((error, sucess) => {

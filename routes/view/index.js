@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 router.get('/', function(req,res){
   let userSession = req.session;
-  if (!userSession.user) {
+  if (!userSession.username) {
     res.redirect('/login')
   } else {
     res.render('home', { title: 'Sample RESTful WebApp', css: ['home.css'] });

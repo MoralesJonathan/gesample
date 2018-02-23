@@ -17,7 +17,7 @@ var auth = function (req, res, next) {
 				};
 				if (user !== null) {
 					if (bcrypt.compareSync(req.body.password, user.password)) {
-						userSession.user = user.username;
+						userSession.username = user.username;
 						userSession.firstname = user.firstName
 						userSession.lastname = user.lastName
 						mongoose.disconnect();

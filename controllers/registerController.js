@@ -1,4 +1,3 @@
-// const db = require('../models/user');
 const create = require('../scripts/create');
 
 module.exports = {

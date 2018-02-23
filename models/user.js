@@ -9,6 +9,8 @@ const userSchema = new Schema({
   lastName:String,
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  age: {type: Number, required: false},
+  language: { type: String, required: false },
   created_at: Date,
   updated_at: Date
 });
