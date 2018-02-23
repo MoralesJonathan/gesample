@@ -1,13 +1,15 @@
+/*jshint esversion: 6 */
 const router = require("express").Router();
 
 router.get('/', function(req,res){
   let userSession = req.session;
   if (!userSession.username) {
-    res.redirect('/login')
+    res.redirect('/login');
   } else {
-    res.render('home', { title: 'Sample RESTful WebApp', css: ['home.css'] });
+    console.log(req.query)
+    res.render('home', { title: 'Sample RESTful WebApp', css: ['home.css'], userInfo: [{"name":  req.query.name, "email": req.query.email, "age": req.query.age, "language": req.query.lang}] });
   }
-})
+});
 
 
 router.get("/login", function(req, res) {

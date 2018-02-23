@@ -1,11 +1,11 @@
 const bcrypt = require("bcrypt");
-const models = require('../models/user')
+const models = require('../models/user');
 const mongoose = require('mongoose');
-const keys = require('../keys.json')
+const keys = require('../keys.json');
 
 var auth = function (req, res, next) {
 	let userSession = req.session;
-	mongoose.connect(keys.mongoUrl + "gesample", (mongooseErr, sucess) => {
+	mongoose.connect(`${keys.mongoUrl}gesample`, (mongooseErr, sucess) => {
 		if (mongooseErr) {
 			console.error(`Could not connect to mongoose error: ${mongooseErr}`)
 			next(false)
@@ -13,7 +13,7 @@ var auth = function (req, res, next) {
 		else {
 			models.findOne({ 'username': req.body.username.toLowerCase().trim() }, function (err, user) {
 				if (err) {
-					next(false) //Login failed strange error 
+					next(false) //Login failed strange error
 				};
 				if (user !== null) {
 					if (bcrypt.compareSync(req.body.password, user.password)) {
@@ -21,13 +21,13 @@ var auth = function (req, res, next) {
 						userSession.firstname = user.firstName
 						userSession.lastname = user.lastName
 						mongoose.disconnect();
-						next(true);
+						next({firstname: user.firstName, lastname: user.lastName, email: user.username, age: user.age, language: user.languagee});
 					}
 					else {
-						next(false) //Login failed! Bad Password
+						next(false); //Login failed! Bad Password
 					};
 				} else {
-					next(false) //Login failed! Bad Username
+					next(false); //Login failed! Bad Username
 				}
 			});
 		}
